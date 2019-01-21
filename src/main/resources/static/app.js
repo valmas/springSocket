@@ -43,6 +43,8 @@ $(function () {
     $( "#price" ).change(function() { calculateGas(); });
 
     $( "#tolls" ).change(function() { calculateTolls(); });
+
+    $( "#eCalc" ).click(function() { calculateExtra(); });
 });
 
 function calculateGas() {
@@ -79,6 +81,37 @@ function calculatePartial() {
     var partial = total / 3;
     $("#arisOwes").val((partial - ap).toFixed(2));
     $("#pitsOwes").val((partial - pp).toFixed(2));
+}
+
+function calculateExtra(){
+    calculatePartial();
+
+    var ao = $("#arisOwes").val();
+    var po = $("#pitsOwes").val();
+
+    var jokes = $("#jokes").val();
+    if(jokes > 0) {
+        po = Number(jokes) + Number(po);
+    }
+
+    var skismoke = $("#skismoke").val();
+    if(skismoke == 1) {
+        ao -= 20;
+    }
+
+    var carKeys = $("#carKeys").val();
+    if(carKeys == 2) {
+        ao -= 5;
+        po -= 5;
+    }
+
+    var falls = $("#falls").val();
+    if(falls > 0) {
+        po = Number(po) + Number(0.5*falls);
+    }
+
+    $("#arisOwes").val(ao);
+    $("#pitsOwes").val(po);
 }
 
 function reset() {
